@@ -1,7 +1,7 @@
 {
   "name": "node-red-contrib-flexitimer",
-  "version": "1.0.0",
-  "description": "A node that allows to set countdown timer and manipulate it using messages",
+  "version": "0.1.0",
+  "description": "NodeRED node that allows to set timer with the ability to start, stop, reset, or modify the timer using message payloads.",
   "main": "nodes/flexitimer.js",
   "scripts": {
     "build": "babel src -d dist --copy-files",
@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "keywords": [
-    "node-red",
+    "nodered",
     "flexitimer",
     "timer",
     "automation",
