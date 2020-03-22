@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "A node that allows to set countdown timer and manipulate it using messages",
   "main": "nodes/flexitimer.js",
+  "scripts": {
+    "build": "babel src -d dist --copy-files",
+    "start": "nodemon --exec babel-node src/nodes/flexitimer.js",
+    "prepare": "babel src -d dist --copy-files"
+  },
   "author": {
     "name": "Lukas Horak",
     "email": "lukas@lukashorak.com"
@@ -10,17 +15,26 @@
   "license": "MIT",
   "keywords": [
     "node-red",
+    "flexitimer",
     "timer",
     "automation",
     "stoptimer"
   ],
   "node-red": {
     "nodes": {
-      "flexitimer": "nodes/flexitimer.js"
+      "flexitimer": "dist/nodes/flexitimer.js"
     }
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lhorak/node-red-contrib-flexitimer.git"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.9.0",
+    "nodemon": "^2.0.2"
   }
 }
