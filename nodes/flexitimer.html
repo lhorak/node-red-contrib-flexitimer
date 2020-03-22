@@ -1,0 +1,53 @@
+<script type="text/javascript">
+  RED.nodes.registerType("flexitimer", {
+    category: "function",
+    color: "#a6bbcf",
+    defaults: {
+      name: { value: "" },
+      duration: { value: 60, validate: RED.validators.number() },
+      durationunit: { value: "seconds" },
+      updateinterval: { value: 1, validate: RED.validators.number() },
+      updateunit: { value: "seconds" }
+    },
+    inputs: 1,
+    outputs: 3,
+    outputLabels: ["on start", "on stop", "on update"],
+    icon: "function.png",
+    label: function() {
+      return this.name || "flexitimer";
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="flexitimer">
+      <div class="form-row">
+          <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+          <input type="text" id="node-input-name" placeholder="Name">
+      </div>
+      <div class="form-row">
+        <label for="node-input-duration"><i class="icon-tag"></i> Timer</label>
+        <div style="width: calc(100% - 120px); display: inline-block;">
+          <input type="number" id="node-input-duration" style="width: calc(100% - 150px);">
+          <select id="node-input-durationunit" style="width: 100px;">
+            <option value="seconds" selected="selected">second(s)</option>
+            <option value="minutes">minute(s)</option>
+            <option value="hours">hour(s)</option>
+          </select>
+        </div>
+    </div>
+    <div class="form-row">
+      <label for="node-input-updateinterval"><i class="icon-tag"></i> Update interval in seconds</label>
+      <div style="width: calc(100% - 120px); display: inline-block;">
+      <input type="number" id="node-input-updateinterval" placeholder="duration in seconds" style="width: calc(100% - 150px);">
+      <select id="node-input-updateunit"  style="width: 100px;">
+        <option value="seconds" selected="selected">second(s)</option>
+        <option value="minutes">minute(s)</option>
+        <option value="hours">hour(s)</option>
+      </select>
+    </div>
+  </div>
+</script>
+
+<script type="text/html" data-help-name="flexitimer">
+  <p>A simple node that will help you set up a stop timer, with a configurable time and options to increase or decrease the duration using messages</p>
+</script>

@@ -1,0 +1,26 @@
+{
+  "name": "node-red-contrib-flexitimer",
+  "version": "1.0.0",
+  "description": "A node that allows to set countdown timer and manipulate it using messages",
+  "main": "nodes/flexitimer.js",
+  "author": {
+    "name": "Lukas Horak",
+    "email": "lukas@lukashorak.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node-red",
+    "timer",
+    "automation",
+    "stoptimer"
+  ],
+  "node-red": {
+    "nodes": {
+      "flexitimer": "nodes/flexitimer.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lhorak/node-red-contrib-flexitimer.git"
+  }
+}
