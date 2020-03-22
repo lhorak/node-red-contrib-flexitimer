@@ -1,5 +1,13 @@
+import { propOr, toLower } from "ramda";
+
 import Timer from "../lib/Timer";
 import convertDuration from "../lib/convertDuration";
+
+const incrementRegex = /^inc(re(ase|ment))?$/gim;
+const decrementRegex = /^dec(re(ase|ment))?$/gim;
+const startRegex = /^(start|on|begin)$/gim;
+const stopRegex = /^(stop|off|end)$/gim;
+const restartRegex = /^re(start|set)$/gim;
 
 module.exports = function(RED) {
   function flexitimer(config) {
@@ -16,30 +24,61 @@ module.exports = function(RED) {
     });
 
     const handleInput = msg => {
-      if (msg.payload.increase) {
-        var seconds = msg.payload.increase;
-        return timerInstance.addTime(seconds);
+      const { payload } = msg;
+
+      if (has("action")(payload)) {
+        const { action } = payload;
+
+        if (startRegex.test(action)) {
+          return timerInstance.start();
+        }
+
+        if (stopRegex.test(action)) {
+          return timerInstance.stop();
+        }
+
+        if (incrementRegex.test(action)) {
+          const { value, unit } = payload;
+          const duration = convertDuration(value, propOr("seconds", unit));
+          return timerInstance.addTime(duration);
+        }
+
+        if (decrementRegex.test(action)) {
+          const { value, unit } = payload;
+          const duration = convertDuration(value, propOr("seconds", unit));
+          return timerInstance.subtractTime(duration);
+        }
       }
 
-      if (msg.payload.decrease) {
-        var seconds = msg.payload.decrease;
-        return timerInstance.subtractTime(seconds);
+      if (has("increase")(payload)) {
+        const duration = convertDuration(
+          payload.increase,
+          propOr("seconds", payload.unit)
+        );
+        return timerInstance.addTime(duration);
       }
 
-      if (msg.payload.setTo) {
-        var seconds = msg.payload.setTo;
-        return timerInstance.setTime(seconds);
+      if (has("decrease")(payload)) {
+        const duration = convertDuration(
+          payload.decrease,
+          propOr("seconds", payload.unit)
+        );
+        return timerInstance.subtractTime(duration);
       }
 
-      if (msg.payload === "STOP" || msg.payload === "stop") {
+      if (has("setTo")(payload)) {
+        const duration = convertDuration(
+          payload.setTo,
+          propOr("seconds", payload.unit)
+        );
+        return timerInstance.setTime(duration);
+      }
+
+      if (toLower(payload) === "stop") {
         return timerInstance.stop();
       }
 
-      if (
-        msg.payload === "START" ||
-        msg.payload === "start" ||
-        msg.action === "START"
-      ) {
+      if (toLower(payload) === "start") {
         return timerInstance.start();
       }
     };

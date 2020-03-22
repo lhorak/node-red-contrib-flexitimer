@@ -49,5 +49,33 @@
 </script>
 
 <script type="text/html" data-help-name="flexitimer">
-  <p>A simple node that will help you set up a stop timer, with a configurable time and options to increase or decrease the duration using messages</p>
+    <p>A simple node that will help you set up a stop timer, with a configurable time and options to increase or decrease the duration using messages</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+      <dt>payload
+          <span class="property-type">string | buffer</span>
+      </dt>
+      <dd> The payload that controlls the timer. It can be either a string or a JSON object. You get more control when using JSON objects.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+      <li>On Start
+          <dl class="message-properties">
+              <dt>payload <span class="property-type">JSON</span></dt>
+              <dd>Output that gets triggered when the timer starts.</dd>
+          </dl>
+      </li>
+      <li>On Stop
+          <dl class="message-properties">
+              <dt>payload <span class="property-type">JSON</span></dt>
+              <dd>Output that gets triggered when the timer finishes (either by the timeout or when a stop signal is sent to input).</dd>
+          </dl>
+      </li>
+  </ol>
+
+  <h3>Details</h3>
+    <p><code>msg.payload</code> is used to control the timer. If you send a message with payload <code>START</code>, it will start the timer with default values from node configuration.</p>
+    <p>If you'd like to stop the timer, you need to send a new message to the input with a string payload <code>STOP</code>. This will stop the current timer, and send a message to <code>On Stop</code> output.</p>
 </script>
